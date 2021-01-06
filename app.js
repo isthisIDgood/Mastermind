@@ -12,6 +12,13 @@ const colorSelectionFields = document.querySelectorAll('.color');
 const guessFields = document.querySelector('.guesser').querySelectorAll('.circle');
 //Guess Form
 const guessForm = document.querySelector('#submit-guess');
+//Start instant for timer
+let startTime = Date.now()
+//Post-game Modal
+const modalBackground = document.querySelector('.modal-background');
+const numAttempts = document.querySelector('#num-attempts');
+const totalTime = document.querySelector('#time');
+const resetBtn = document.querySelector('#play-again');
 
 function resetFields(fields) {
     removeSelectedClass(fields);
@@ -159,11 +166,20 @@ function isCompleteGuess(guessFields) {
 }
 
 function endGame() {
+    const endTime = Date.now();
+    const timeDiff = (endTime - startTime) / 1000;
+    const minutes = Math.floor(timeDiff / 60);
+    const seconds = Math.floor(timeDiff - minutes * 60);
     const answerSection = document.querySelector('#solution');
     setTimeout(() => {
         window.scroll(0, 0);
         answerSection.classList.remove('black');
         answerSection.innerHTML = finalAnswerHTML;
+        numAttempts.textContent = `${currentRow - 1}`;
+        totalTime.textContent = `${minutes}:${seconds}`
+        setTimeout(() => {
+            modalBackground.classList.add('modal-active');
+        }, 250);
     }, 500);
     removeSelectedClass(guessFields);    //global scope
     gameOver = true;     //global scope
