@@ -181,7 +181,8 @@ applyColorChanges(colorSelectionFields);
 guessForm.addEventListener('submit', (e) => {
     e.preventDefault();
     if (!gameOver && isCompleteGuess(document.querySelector('.guesser').querySelectorAll('.circle'))) {
-        const row = document.getElementById(`${currentRow}`).parentNode;
+        const rowNum = document.getElementById(`${currentRow}`)
+        const row = rowNum.parentNode;
         const guessFields = row.querySelectorAll('.circle');
         for (let i = 0; i < guessFields.length; i++) {
             const colorClass = findColorClass(document.querySelector('.guesser').querySelectorAll('.circle')[i]);
@@ -190,6 +191,10 @@ guessForm.addEventListener('submit', (e) => {
         resetFields(document.querySelector('.guesser').querySelectorAll('.circle'));
         checkGuess(row);
         currentRow++;
+        if (!gameOver) {
+            rowNum.classList.remove('current-row');
+            document.getElementById(`${currentRow}`).classList.add('current-row');
+        }
     } else if (!gameOver && !isCompleteGuess(document.querySelector('.guesser').querySelectorAll('.circle'))) {
         alert('Please Complete Your Guess');
     }
