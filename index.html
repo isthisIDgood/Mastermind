@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/color-circles.png">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="app.css">
+    <title>Mastermind</title>
+</head>
+<body>
+    <div id="header">
+        <h1>Mastermind</h1>
+        <h2 id="motto">The Challenging Game of Logic & Deduction</h2>
+    </div>
+    <div id="game">
+            <div class="row black" id="solution">
+                <div id="answer-container">
+                    <span id="answer-cover">MASTERMIND</span>
+                </div>
+            </div>
+        <div class="row game-row">
+            <div class="guess-row">
+                <span id="10" class="number">10.</span>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="guess-section">
+                    <div class="guess"></div>
+                    <div class="guess"></div>
+                    <div class="guess"></div>
+                    <div class="guess"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row game-row">
+            <div class="guess-row">
+                <span id="9" class="number">9.</span>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="guess-section">
+                    <div class="guess"></div>
+                    <div class="guess"></div>
+                    <div class="guess"></div>
+                    <div class="guess"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row game-row">
+            <div class="guess-row">
+                <span id="8" class="number">8.</span>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="guess-section">
+                    <div class="guess"></div>
+                    <div class="guess"></div>
+                    <div class="guess"></div>
+                    <div class="guess"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row game-row">
+            <div class="guess-row">
+                <span id="7" class="number">7.</span>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="guess-section">
+                    <div class="guess"></div>
+                    <div class="guess"></div>
+                    <div class="guess"></div>
+                    <div class="guess"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row game-row">
+            <div class="guess-row">
+                <span id="6" class="number">6.</span>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="guess-section">
+                    <div class="guess"></div>
+                    <div class="guess"></div>
+                    <div class="guess"></div>
+                    <div class="guess"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row game-row">
+            <div class="guess-row">
+                <span id="5" class="number">5.</span>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="guess-section">
+                    <div class="guess"></div>
+                    <div class="guess"></div>
+                    <div class="guess"></div>
+                    <div class="guess"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row game-row">
+            <div class="guess-row">
+                <span id="4" class="number">4.</span>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="guess-section">
+                    <div class="guess"></div>
+                    <div class="guess"></div>
+                    <div class="guess"></div>
+                    <div class="guess"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row game-row">
+            <div class="guess-row">
+                <span id="3" class="number">3.</span>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="guess-section">
+                    <div class="guess"></div>
+                    <div class="guess"></div>
+                    <div class="guess"></div>
+                    <div class="guess"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row game-row">
+            <div class="guess-row">
+                <span id="2" class="number">2.</span>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="guess-section">
+                    <div class="guess"></div>
+                    <div class="guess"></div>
+                    <div class="guess"></div>
+                    <div class="guess"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row game-row">
+            <div class="guess-row">
+                <span id="1" class="number">1.</span>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="guess-section">
+                    <div class="guess"></div>
+                    <div class="guess"></div>
+                    <div class="guess"></div>
+                    <div class="guess"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row game-row guesser">
+            <div class="guess-row">
+                    <div class="circle selected"></div>
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                    <div class="circle"></div>
+                    <!-- <button>Guess</button> -->
+            </div>
+        </div>
+    </div>
+    <div id="color-options">
+        <h4>Colors</h4>
+        <form id="submit-guess" action="">
+            <div class="colors">
+                <div id="red" class="color red"></div>
+                <div id="blue" class="color blue"></div>
+                <div id="yellow" class="color yellow"></div>
+                <div id="green" class="color green"></div>
+                <div id="white" class="color white"></div>
+                <div id="black" class="color black"></div>
+            </div>
+            <button class="guess-btn">Guess</button>
+        </form>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
