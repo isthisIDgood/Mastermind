@@ -179,7 +179,7 @@ function endGame() {
         totalTime.textContent = `${minutes}:${seconds}`
         setTimeout(() => {
             modalBackground.classList.add('modal-active');
-        }, 250);
+        }, 500);
     }, 500);
     removeSelectedClass(guessFields);    //global scope
     gameOver = true;     //global scope
