@@ -1,10 +1,11 @@
 html {
     scroll-behavior: smooth;
+    font-family: 'Staatliches', cursive;
 }
 
 body {
     text-align: center;
-    font-family: 'Staatliches', cursive;
+    /* font-family: 'Staatliches', cursive; */
     margin: 0;
     background-color: rgb(75, 86, 102);
     color: white;
@@ -254,8 +255,11 @@ h4 {
     text-align: center;
 }
 
-#post-game-message {
+.success {
     color: rgb(119, 255, 107);
+}
+
+#post-game-message {
     font-size: 4em;
     margin-top: .25em;
     margin-bottom: .5em;
@@ -266,6 +270,8 @@ h4 {
     border: transparent;
     padding: 1em;
     width: 25%;
+    font-family: 'Staatliches', cursive;
+    font-size: 1em;
 }
 
 #play-again:hover {

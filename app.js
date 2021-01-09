@@ -123,7 +123,9 @@ function checkGuess(guessedRow) {
     })
     displayHints(hintAry, guessedRow.querySelectorAll('.guess'));
     if (correctGuess(answer, guessedFieldsList)) {
-        endGame();
+        endGame(true);
+    } else if (currentRow >= 10) {
+        endGame(false);
     }
 }
 
@@ -165,24 +167,43 @@ function isCompleteGuess(guessFields) {
     return complete
 }
 
-function endGame() {
-    const endTime = Date.now();
-    const timeDiff = (endTime - startTime) / 1000;
-    const minutes = Math.floor(timeDiff / 60);
-    const seconds = Math.floor(timeDiff - minutes * 60);
+function endGame(success) {
+    const timeDiff = findTotalTime(Date.now());
     const answerSection = document.querySelector('#solution');
+    const postGameMsg = document.querySelector('#post-game-message')
+    if (success) {
+        postGameMsg.textContent = 'Great Job!';
+    } else if (!success) {
+        postGameMsg.textContent = 'Nice Try!';
+    }
     setTimeout(() => {
         window.scroll(0, 0);
         answerSection.classList.remove('black');
         answerSection.innerHTML = finalAnswerHTML;
         numAttempts.textContent = `${currentRow - 1}`;
-        totalTime.textContent = `${minutes}:${seconds}`
+        totalTime.textContent = timeDiff
         setTimeout(() => {
             modalBackground.classList.add('modal-active');
         }, 500);
     }, 500);
     removeSelectedClass(guessFields);    //global scope
     gameOver = true;     //global scope
+}
+
+function findTotalTime(endTime) {
+    let hours = 0;
+    const timeDiff = (endTime - startTime) / 1000;
+    const minutes = Math.floor(timeDiff / 60);          
+    const seconds = Math.floor(timeDiff - minutes * 60);
+    if (minutes <= 0) {
+        return `${seconds} seconds`
+    } else if (minutes >= 60) {
+        hours = Math.floor(minutes / 60);   
+        minutes = minutes % 60;
+        return `${hours}:${minutes}:${seconds}`
+    } else {
+        return `${minutes}:${seconds}`
+    }
 }
 
 function getRandomInt(min, max) {
