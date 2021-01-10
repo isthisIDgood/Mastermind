@@ -6,6 +6,10 @@ let currentRow = 1;  //Inital Row to start playing on
 const colors = ['red', 'blue', 'yellow', 'green', 'white', 'black'];
 //Create Answer Array
 const answer = [];
+//Answer Section
+const answerSection = document.querySelector('#solution');
+//Initialize HTML answer variable
+let finalAnswerHTML = '';
 //Gather Selection Section
 const colorSelectionFields = document.querySelectorAll('.color');
 //Gather Guessing Section
@@ -13,7 +17,7 @@ const guessFields = document.querySelector('.guesser').querySelectorAll('.circle
 //Guess Form
 const guessForm = document.querySelector('#submit-guess');
 //Start instant for timer
-let startTime = Date.now()
+let startTime = Date.now();
 //Post-game Modal
 const modalBackground = document.querySelector('.modal-background');
 const numAttempts = document.querySelector('#num-attempts');
@@ -30,8 +34,14 @@ function resetFields(fields) {
 
 function generateAnswer() {
     for (let i = 0; i < 4; i++) {
-        answer.push(colors[getRandomInt(0, colors.length)]);
-    }
+        answer[i] = colors[getRandomInt(0, colors.length)];
+    } 
+    finalAnswerHTML = `<div class="guess-row">
+                            <div class="circle ${answer[0]}"></div>
+                            <div class="circle ${answer[1]}"></div>
+                            <div class="circle ${answer[2]}"></div>
+                            <div class="circle ${answer[3]}"></div>
+                        </div>`;
 }
 
 function createSelectListeners(fields) {
@@ -57,11 +67,11 @@ function moveSelected(fields) {
             if (fields[i].classList[ii].toLowerCase() === 'selected' && i !== fields.length - 1) {
                 fields[i + 1].classList.add('selected');
                 fields[i].classList.remove('selected');
-                return
+                return;
             } else if (i === fields.length - 1) {
                 fields[i].classList.remove('selected');
                 fields[0].classList.add('selected');
-                return
+                return;
             }
         }
     }
@@ -88,7 +98,7 @@ function removeColors(field) {
 function findColorClass(field) {
     for (let i = 0; i < field.classList.length; i++) {
         if (colors.includes(field.classList[i])){
-            return field.classList[i]
+            return field.classList[i];
         }
     }
 }
@@ -139,11 +149,11 @@ function displayHints(hintAry, hints) {
 
 function sortGuess(a, b) {
     if (a.class === 'red') {
-        return -1
+        return -1;
     } else if (b.class === 'red') {
-        return 1
+        return 1;
     } else {
-        return 0
+        return 0;
     }
 }
 
@@ -154,7 +164,7 @@ function correctGuess(answers, guesses) {
             correct = false;
         }
     })
-    return correct
+    return correct;
 }
 
 function isCompleteGuess(guessFields) {
@@ -164,24 +174,19 @@ function isCompleteGuess(guessFields) {
             complete = false;
         }
     }
-    return complete
+    return complete;
 }
 
 function endGame(success) {
     const timeDiff = findTotalTime(Date.now());
-    const answerSection = document.querySelector('#solution');
-    const postGameMsg = document.querySelector('#post-game-message')
-    if (success) {
-        postGameMsg.textContent = 'Great Job!';
-    } else if (!success) {
-        postGameMsg.textContent = 'Nice Try!';
-    }
+    const postGameMsg = document.querySelector('#post-game-message');
+    postGameMsg.textContent = success ? 'Great Job!' : 'Nice Try!';
     setTimeout(() => {
         window.scroll(0, 0);
         answerSection.classList.remove('black');
         answerSection.innerHTML = finalAnswerHTML;
         numAttempts.textContent = `${currentRow - 1}`;
-        totalTime.textContent = timeDiff
+        totalTime.textContent = timeDiff;
         setTimeout(() => {
             modalBackground.classList.add('modal-active');
         }, 500);
@@ -193,16 +198,27 @@ function endGame(success) {
 function findTotalTime(endTime) {
     let hours = 0;
     const timeDiff = (endTime - startTime) / 1000;
-    const minutes = Math.floor(timeDiff / 60);          
+    let minutes = Math.floor(timeDiff / 60);          
     const seconds = Math.floor(timeDiff - minutes * 60);
     if (minutes <= 0) {
-        return `${seconds} seconds`
+        return `${seconds} seconds`;
     } else if (minutes >= 60) {
         hours = Math.floor(minutes / 60);   
         minutes = minutes % 60;
-        return `${hours}:${minutes}:${seconds}`
+        return `${hours}:${minutes}:${seconds}`;
     } else {
-        return `${minutes}:${seconds}`
+        return `${minutes}:${seconds}`;
+    }
+}
+
+function clearAllGuesses() {
+    const guessCircles = document.querySelectorAll('.circle');
+    for (let i = 0; i < guessCircles.length; i++) {
+        removeColors(guessCircles[i]);
+    }
+    const guesses = document.querySelectorAll('.guess');
+    for (let i = 0; i < guesses.length; i++) {
+        removeColors(guesses[i]);
     }
 }
 
@@ -218,7 +234,7 @@ applyColorChanges(colorSelectionFields);
 guessForm.addEventListener('submit', (e) => {
     e.preventDefault();
     if (!gameOver && isCompleteGuess(document.querySelector('.guesser').querySelectorAll('.circle'))) {
-        const rowNum = document.getElementById(`${currentRow}`)
+        const rowNum = document.getElementById(`${currentRow}`);
         const row = rowNum.parentNode;
         const guessFields = row.querySelectorAll('.circle');
         for (let i = 0; i < guessFields.length; i++) {
@@ -236,13 +252,23 @@ guessForm.addEventListener('submit', (e) => {
         alert('Please Complete Your Guess');
     }
 })
+resetBtn.addEventListener('click', () => {
+    gameOver = false;
+    modalBackground.classList.remove('modal-active');
+    answerSection.innerHTML = `<div id="answer-container">
+                                    <span id="answer-cover">MASTERMIND</span>
+                                </div>`;
+    answerSection.classList.add('black');
+    document.querySelector('.current-row').classList.remove('current-row');
+    currentRow = 1;
+    document.getElementById(`${currentRow}`).classList.add('current-row');
+    clearAllGuesses();
+    resetFields(guessFields);
+    generateAnswer();
+    startTime = Date.now();
+    window.scroll(0, 750);
+})
 
 //Initial Render
 resetFields(guessFields);
 generateAnswer();
-const finalAnswerHTML = `<div class="guess-row">
-                            <div class="circle ${answer[0]}"></div>
-                            <div class="circle ${answer[1]}"></div>
-                            <div class="circle ${answer[2]}"></div>
-                            <div class="circle ${answer[3]}"></div>
-                        </div>`;
