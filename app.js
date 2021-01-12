@@ -26,7 +26,7 @@ const resetBtn = document.querySelector('#play-again');
 
 function resetFields(fields) {
     removeSelectedClass(fields);
-    guessFields[0].classList.add('selected');
+    fields[0].classList.add('selected');
     for (let i = 0; i < fields.length; i++) {
         removeColors(fields[i]); 
     }
@@ -199,7 +199,8 @@ function findTotalTime(endTime) {
     let hours = 0;
     const timeDiff = (endTime - startTime) / 1000;
     let minutes = Math.floor(timeDiff / 60);          
-    const seconds = Math.floor(timeDiff - minutes * 60);
+    let seconds = Math.floor(timeDiff - minutes * 60);
+    seconds = seconds.toString().length === 2 ? seconds : parseInt(`${seconds}0`)   //edge case
     if (minutes <= 0) {
         return `${seconds} seconds`;
     } else if (minutes >= 60) {
